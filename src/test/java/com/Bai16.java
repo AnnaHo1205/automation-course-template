@@ -1,17 +1,13 @@
 package com;
 
-import java.util.ArrayList;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.utils.BasicTest;
 import com.utils.Utils;
 
-public class LoginTest extends BasicTest {
+public class Bai16 extends BasicTest {
 
     public void ClickRegisterBtn() {
         WebElement registerBtn = driver.findElement(By.xpath("//*[@name='register']"));
@@ -31,22 +27,14 @@ public class LoginTest extends BasicTest {
         String expected = "Lỗi: Vui lòng cung cấp địa chỉ email hợp lệ.";
         Assert.assertEquals(expected, actual);
         Utils.hardWait();
+        //*[contains(text(),'Vui lòng cung cấp địa chỉ email hợp lệ.')]
+        //Assert.assertTrue(errorMessage.contains("Vui lòng cung cấp địa chỉ email hợp lệ"));
+
     }
 
     public void InputText(By element, String text) {
         WebElement emailEle1 = driver.findElement(element);
         emailEle1.sendKeys(text);
-    }
-
-    public void Login() {
-        By userNameEle = By.xpath("//*[@name='username']");
-        String username = "huou@gmail.com";
-        InputText(userNameEle, username);
-        By passEle = By.xpath("//*[@name='password']");
-        String pass = "Huou123@123";
-        InputText(passEle, pass);
-        ClickLoginBtn();
-
     }
 
     public void Launchwebsite() {
@@ -86,47 +74,5 @@ public class LoginTest extends BasicTest {
         Assert.assertEquals(expectedEmailValid, actualEmailValid);
 
     }
-
-    @Test(enabled = true)
-    public void loginTestBai17() {
-        // Launch website
-        Launchwebsite();
-
-        // Homework 17
-        // Case Login
-        // WebElement userNameEle =
-        // driver.findElement(By.xpath("//*[@name='username']"));
-        // userNameEle.sendKeys("huou@gmail.com");
-        // WebElement passEle = driver.findElement(By.xpath("//*[@name='password']"));
-        // passEle.sendKeys("Huou123@123");
-        Login();
-        WebElement exitElement = driver.findElement(By.xpath("//*[text()='Thoát']"));
-        Actions action = new Actions(driver);
-        action.moveToElement(exitElement).click(exitElement).build().perform();
-        Utils.hardWait();
-        driver.navigate().back();
-        Utils.hardWait();
-        WebElement verifyHeader = driver.findElement(By.xpath("//h1[contains(text(),'Tài khoản')]"));
-        Assert.assertTrue(verifyHeader.isDisplayed());
-
-    }
-
-    @Test(enabled = true)
-    public void loginTestBai18() {
-        // Launch website
-        Launchwebsite();
-
-        // Homework 18
-        // Case Login
-        Login();
-        // Way 1
-        driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-        // Switch focus to new tab
-        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(0));
-        // Launch URL in the new tab
-        driver.get("https://bantheme.xyz/hathanhauto/");
-        Assert.assertEquals(driver.getCurrentUrl(), "https://bantheme.xyz/hathanhauto/");
-
-    }
+    
 }
